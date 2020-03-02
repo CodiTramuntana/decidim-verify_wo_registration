@@ -1,0 +1,6 @@
+---
+en:
+  decidim:
+    components:
+      verify_wo_registration:
+        name: VerifyWoRegistration
