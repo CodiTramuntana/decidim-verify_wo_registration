@@ -1,5 +1,0 @@
-example_id                                                                            | status | run_time        |
-------------------------------------------------------------------------------------- | ------ | --------------- |
-./spec/lib/decidim/verify_wo_registration/extend_budgets_component_spec.rb[1:1:1]     | failed | 0.00112 seconds |
-./spec/lib/decidim/verify_wo_registration/extend_proposals_component_spec.rb[1:1:1:1] | passed | 0.00634 seconds |
-./spec/lib/decidim/verify_wo_registration/extend_proposals_component_spec.rb[1:2:1:1] | passed | 0.00964 seconds |
