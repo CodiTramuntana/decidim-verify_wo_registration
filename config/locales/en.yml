@@ -2,5 +2,11 @@
 en:
   decidim:
     components:
-      verify_wo_registration:
-        name: VerifyWoRegistration
+      budgets:
+        settings:
+          global:
+            supports_without_registration: Enable suports without registration (user only verifies)
+      proposals:
+        settings:
+          global:
+            supports_without_registration: Enable suports without registration (user only verifies)

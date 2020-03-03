@@ -1,0 +1,12 @@
+---
+ca:
+  decidim:
+    components:
+      budgets:
+        settings:
+          global:
+            supports_without_registration: Poder donar suports sense registre (només verificant-se)
+      proposals:
+        settings:
+          global:
+            supports_without_registration: Poder donar suports sense registre (només verificant-se)

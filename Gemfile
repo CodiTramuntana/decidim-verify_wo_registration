@@ -8,15 +8,13 @@ DECIDIM_VERSION= {git: "https://github.com/decidim/decidim", branch: 'develop'}
 gem "decidim-core", DECIDIM_VERSION
 gem "decidim-proposals", DECIDIM_VERSION
 gem "decidim-budgets", DECIDIM_VERSION
-gem "decidim-verifications", DECIDIM_VERSION
-gem "decidim-comments", DECIDIM_VERSION
 gem "decidim-verify_wo_registration", path: "."
 
 gem "puma"
 gem "uglifier"
 
 group :development, :test do
-  # gem "decidim", DECIDIM_VERSION
+  gem "decidim", DECIDIM_VERSION
   gem "bootsnap"
   gem "byebug", "~> 11.0", platform: :mri
 

@@ -1,0 +1,12 @@
+---
+es:
+  decidim:
+    components:
+      budgets:
+        settings:
+          global:
+            supports_without_registration: Poder dar soportes sin registrarse (sólo verificandose)
+      proposals:
+        settings:
+          global:
+            supports_without_registration: Poder dar soportes sin registrarse (sólo verificandose)
