@@ -12,15 +12,15 @@ end
 
 describe "extend gloal settings" do
   context "budgets settings" do
-    let!(:component) { Decidim.find_component_manifest :budgets }
-    let(:global_settings) { component.settings(:global) }
+    let!(:component_manifest) { Decidim.find_component_manifest :budgets }
+    let(:global_settings) { component_manifest.settings(:global) }
 
     it_behaves_like "has global setting", :supports_without_registration, Axiom::Types::Boolean
   end
 
   context "proposals settings" do
-    let!(:component) { Decidim.find_component_manifest :proposals }
-    let(:global_settings) { component.settings(:global) }
+    let!(:component_manifest) { Decidim.find_component_manifest :proposals }
+    let(:global_settings) { component_manifest.settings(:global) }
 
     it_behaves_like "has global setting", :supports_without_registration, Axiom::Types::Boolean
   end

@@ -11,8 +11,15 @@ module Decidim
 
       routes do
         # Add engine routes here
-        # resources :verify_wo_registration
+        resources :verifications, only: %i(new create)
         # root to: "verify_wo_registration#index"
+      end
+
+
+      initializer "verify_wo_registration.mount_routes" do |_app|
+        Decidim::Core::Engine.routes do
+          mount Decidim::VerifyWoRegistration::Engine => "/verify_wo_registration"
+        end
       end
 
       initializer "decidim_verify_wo_registration.assets" do |app|

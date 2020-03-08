@@ -24,4 +24,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'decidim-budgets', DECIDIM_VER
   s.add_development_dependency 'decidim', DECIDIM_VER
   s.add_development_dependency 'decidim-dev', DECIDIM_VER
+  s.add_development_dependency 'decidim-participatory_processes', DECIDIM_VER
 end
