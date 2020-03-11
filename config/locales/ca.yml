@@ -10,3 +10,13 @@ ca:
         settings:
           global:
             supports_without_registration: Poder donar suports sense registre (només verificant-se)
+  verify_wo_registration:
+    login_modal:
+      title: Per tal de poder participar cal que et verifiquis. Com et vols verificar?
+      col1_only_verify_btn: Només vull verificar-me (no tinc usuari i no em vull registrar)
+      col2_title: Ja tinc un usuari, vull fer login
+    form:
+      announcement: La sessió expirarà en %{minutes} minuts
+      description: Per tal de poder participal cal que verifiquis les teves credencials a través del següent formulari
+      submit_btn: Verifica
+      title: Verificació del/la participant

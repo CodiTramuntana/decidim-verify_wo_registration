@@ -1,6 +1,6 @@
 <div class="reveal two_columns" id="loginModal" data-reveal>
   <div class="reveal__header">
-    <h3 class="reveal__title">To participate you must validate yourself. How do you want to participate?<%#= t(".title") %></h3>
+    <h3 class="reveal__title"><%= t("verify_wo_registration.login_modal.title") %></h3>
     <button class="close-button" data-close aria-label="Close modal"
       type="button">
       <span aria-hidden="true">&times;</span>
@@ -19,7 +19,7 @@
     <div class="columns medium-6">
       <div class="row">
         <div class="columns medium-10 medium-centered">
-          <h5>I already have a user, I want to make login</h5>
+          <h5><%= t("verify_wo_registration.login_modal.col2_title") %></h5>
           <%= render "decidim/shared/verify_wo_registration_login_modal_col2" %>
         </div>
       </div>

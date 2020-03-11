@@ -10,3 +10,13 @@ en:
         settings:
           global:
             supports_without_registration: Enable suports without registration (user only verifies)
+  verify_wo_registration:
+    login_modal:
+      title: To participate you must be verified. How do you want to verify?
+      col1_only_verify_btn: I have no user and I do not want to
+      col2_title: I already have a user, I want to login
+    form:
+      announcement: The session will expire in %{minutes} minutes
+      description: You must verify your credentials through the following form in order to be able to participate
+      submit_btn: Verify
+      title: Participant verification

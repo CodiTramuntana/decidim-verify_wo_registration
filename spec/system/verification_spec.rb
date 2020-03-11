@@ -2,14 +2,7 @@
 
 require "spec_helper"
 
-shared_examples "standard login modal" do
-  it "is the standard one" do
-    expected_text= "Please sign in"
-    expect(page).to have_content(expected_text)
-  end
-end
-
-describe "Login modal", type: :system do
+describe "Verification process", type: :system do
 
   before do
     switch_to_host(proposals_component.organization.host)
@@ -19,20 +12,24 @@ describe "Login modal", type: :system do
     let(:proposals_component) { create(:proposal_component, :with_votes_enabled) }
     let!(:proposal) { create(:proposal, component: proposals_component) }
 
-    describe "when component has NOT verify w/o registration enabled" do
+    context "when component has NOT verify w/o registration enabled" do
       context "when going to support a given proposal" do
         before do
           go_support_proposal(proposal)
         end
 
-        it_behaves_like "standard login modal"
+        describe "the login modal" do
+          it "is the standard one" do
+            expected_text= "Please sign in"
+            expect(page).to have_content(expected_text)
+          end
+        end
       end
     end
 
-    describe "when component has verify w/o registration enabled" do
+    context "when component has verify w/o registration enabled" do
       before do
         proposals_component.attributes["settings"]["global"]["supports_without_registration"]= true
-        proposals_component.permissions= verification_permissions
         proposals_component.save!
       end
 
@@ -42,33 +39,15 @@ describe "Login modal", type: :system do
         end
 
         describe "the login modal" do
-          let(:verification_permissions) do
-            {"vote"=>{"authorization_handlers"=>{"dummy_authorization_handler"=>{"options"=>{"postal_code"=>"08001"}}}}}
-          end
-
           it "is the customized one" do
-            expected_text= "To participate you must be verified. How do you want to verify?"
+            expected_text= "To participate you must validate yourself. How do you want to participate?"
             expect(page).to have_content(expected_text)
           end
-
-          context "when wanting to ignore registration and only verify" do
-            before do
-              within "#loginModal .row .content", match: :first do
-                click_link "I have no user and I do not want to"
-              end
-            end
-
-            it "renders the handler form" do
-              expect(page).to have_content("Participant verification")
-            end
-          end
         end
+      end
 
-        context "when no direct handlers are available" do
-          let(:verification_permissions) { nil }
-
-          it_behaves_like "standard login modal"
-        end
+      context "when wanting to ignore registration and only verify" do
+        
       end
     end
   end

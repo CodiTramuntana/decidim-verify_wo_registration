@@ -1,0 +1,28 @@
+<div class="wrapper">
+  <div class="row">
+    <div class="columns large-6 medium-centered">
+      <h2 class="heading2"><%= t("verify_wo_registration.form.title") %></h2>
+      <p><%= t("verify_wo_registration.form.description") %></p>
+      <%= cell("decidim/announcement", { announcement: t("verify_wo_registration.form.announcement", minutes: Decidim::ImpersonationLog::SESSION_TIME_IN_MINUTES), callout_class: "warning" }) %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="columns large-6 medium-centered">
+      <%= decidim_form_for(@form, url: verifications_path, html: { class: "form" }) do |form| %>
+        <div class="card">
+          <div class="card__content">
+            <%= render partial: "form", object: form %>
+            <%= form.hidden_field :component_id %>
+            <%= form.hidden_field :redirect_url %>
+            <%= form.hidden_field :votable_gid %>
+          </div>
+        </div>
+
+        <div class="button--double form-general-submit">
+          <%= form.submit(t("verify_wo_registration.form.submit_btn")) %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

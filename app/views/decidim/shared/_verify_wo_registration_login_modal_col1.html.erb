@@ -5,9 +5,9 @@
       <% params = {component_id: current_component.id,
                   redirect_url: URI(request.original_fullpath).path,
                   votable_gid: votable_gid} %>
-      <%= link_to("I have no user and I do not want to", 
+      <%= link_to(t("verify_wo_registration.login_modal.col1_only_verify_btn"), 
       # decidim.new_verify_wo_registration_verification_path(params)
-      Decidim::VerifyWoRegistration::Engine.routes.url_helpers.new_verification_path, class: "button expanded") %>
+      Decidim::VerifyWoRegistration::Engine.routes.url_helpers.new_verification_path(params), class: "button expanded") %>
     </div>
   </div>
   <div class="columns medium-10 medium-centered">
