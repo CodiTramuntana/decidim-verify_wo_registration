@@ -16,8 +16,7 @@ describe "Login modal", type: :system do
   end
 
   context "when signed-out and a proposals component exists with votes enabled" do
-    let(:proposals_component) { create(:proposal_component, :with_votes_enabled) }
-    let!(:proposal) { create(:proposal, component: proposals_component) }
+    include_examples "has a proposal ready to vote"
 
     describe "when component has NOT verify w/o registration enabled" do
       context "when going to support a given proposal" do
@@ -30,11 +29,7 @@ describe "Login modal", type: :system do
     end
 
     describe "when component has verify w/o registration enabled" do
-      before do
-        proposals_component.attributes["settings"]["global"]["supports_without_registration"]= true
-        proposals_component.permissions= verification_permissions
-        proposals_component.save!
-      end
+      include_examples "the component has supports_without_registration enabled"
 
       context "when going to support a given proposal" do
         before do
@@ -42,9 +37,7 @@ describe "Login modal", type: :system do
         end
 
         describe "the login modal" do
-          let(:verification_permissions) do
-            {"vote"=>{"authorization_handlers"=>{"dummy_authorization_handler"=>{"options"=>{"postal_code"=>"08001"}}}}}
-          end
+          let(:verification_permissions) { build_verification_permissions }
 
           it "is the customized one" do
             expected_text= "To participate you must be verified. How do you want to verify?"
@@ -52,14 +45,8 @@ describe "Login modal", type: :system do
           end
 
           context "when wanting to ignore registration and only verify" do
-            before do
-              within "#loginModal .row .content", match: :first do
-                click_link "I have no user and I do not want to"
-              end
-            end
-
             it "renders the handler form" do
-              expect(page).to have_content("Participant verification")
+              click_verify_only
             end
           end
         end
@@ -72,18 +59,4 @@ describe "Login modal", type: :system do
       end
     end
   end
-
-  # - visits the list of proposals for the `proposals_component`.
-  # - and clicks on the first "Support" button it finds
-  # - it waits for the loginModal to appear
-  def go_support_proposal(proposal)
-    page.visit main_component_path(proposals_component)
-    expect(page).to have_content(proposal.title)
-
-    within ".card__support", match: :first do
-      click_button "Support"
-    end
-    expect(page).to have_css("#loginModal", visible: true)
-  end
-
 end

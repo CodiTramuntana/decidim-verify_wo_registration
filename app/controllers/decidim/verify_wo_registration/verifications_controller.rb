@@ -12,13 +12,13 @@ module Decidim
       helper Decidim::AuthorizationFormHelper
 
       def new
-        @form = form(VerifyWoRegistrationForm).from_params(form_params)
+        @form = form(VerifyWoRegistrationForm).from_params(params)
       end
 
       def create
         @form = form(VerifyWoRegistrationForm).from_params(form_params)
 
-        OnlyVerifiedVote.call(@form) do
+        DoVerifyWoRegistration.call(@form) do
           on(:ok) do |user|
             flash[:notice] = I18n.t("impersonations.create.success", scope: "decidim.admin")
             sign_in(user)
@@ -36,48 +36,18 @@ module Decidim
 
       def form_params
         {
-          authorizations: authorization_handlers,
+          authorizations: verify_params[:authorizations],
           component_id: component.id,
-          redirect_url: params[:redirect_url] || params[:only_verified_votes][:redirect_url],
-          votable_gid: params[:votable_gid] || params[:only_verified_votes][:votable_gid]
+          redirect_url: verify_params[:redirect_url],
         }
       end
 
-      def new_only_verified_user
-        @new_only_verified_user ||= Decidim::User.new(
-          organization: current_organization,
-          managed: true,
-          name: Time.now.utc.to_s(:number)
-        ) do |u|
-          u.nickname = UserBaseEntity.nicknamize(u.name, organization: current_organization)
-          u.admin = false
-          u.roles = ["user_manager"] # Decidim::Admin::Permissions#user_manager?
-          u.tos_agreement = true
-        end
-      end
-
-      def authorization_handlers
-        workflow_manifests(component).map do |manifest|
-          Decidim::AuthorizationHandler.handler_for(manifest.name, handler_params(manifest.name))
-        end
-      end
-
-      def handler_params(handler_name)
-        handler_params = params.dig(:only_verified_votes, :authorizations)
-        return default_handler_params if handler_params.nil?
-
-        handler_params = handler_params.values.find { |h| h["handler_name"] == handler_name }
-        return default_handler_params if handler_params.nil?
-
-        handler_params.merge(default_handler_params)
-      end
-
-      def default_handler_params
-        { user: new_only_verified_user }
+      def verify_params
+        params[:verify_wo_registration].permit!
       end
 
       def component
-        @component ||= Decidim::Component.find(params[:component_id] || params[:only_verified_votes][:component_id])
+        @component ||= Decidim::Component.find(params[:component_id] || verify_params[:component_id])
       end
 
       # Should we validate that only 'direct' verification handlers are enabled?
