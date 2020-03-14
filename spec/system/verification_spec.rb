@@ -5,14 +5,13 @@ require "spec_helper"
 describe "Verification process", type: :system do
 
   before do
-    ::Decidim::ParticpatoryProcessUserRole
     switch_to_host(proposals_component.organization.host)
   end
 
   def fill_the_verification_form_for_dummy_authorization_handler
     within("#new_verify_wo_registration_") do
       fill_in "verify_wo_registration[authorizations[0]][document_number]", with: "00000000X"
-      # fill_in "Postal code", with: ""
+      fill_in "Postal code", with: "00000"
       fill_in "verify_wo_registration[authorizations[0]][birthday]", with: "2000/01/01"
       click_button "Verify"
     end
@@ -31,7 +30,8 @@ describe "Verification process", type: :system do
     end
 
     it "redirects to the previous page and renders a notice" do
-      expect(page).to have_content("1 PROPOSAL")
+      expect(page).to have_content(proposal.title)
+      expect(page).to have_content("You have been successfully verified. You have 30min to participate.")
     end
   end
 
