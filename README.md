@@ -28,7 +28,7 @@ Create a dummy app in your application (if not present):
 ```bash
 bin/rails decidim:generate_external_test_app
 cd spec/decidim_dummy_app/
-bundle exec rails decidim_department_admin:install:migrations
+bundle exec rails decidim-verify_wo_registration:install:migrations
 RAILS_ENV=test bundle exec rails db:migrate
 ```
 
