@@ -20,3 +20,5 @@ es:
       description: Por tal de poder participal hace falta que verifiques tus credenciales a través del siguiente formulario
       submit_btn: Verificate
       title: Verificación del/la participante
+    create:
+      success: Te has verificado correctamente. Tienes %{minutes}min para participar.

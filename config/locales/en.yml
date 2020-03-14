@@ -20,3 +20,5 @@ en:
       description: You must verify your credentials through the following form in order to be able to participate
       submit_btn: Verify
       title: Participant verification
+    create:
+      success: You have been successfully verified. You have %{minutes}min to participate.

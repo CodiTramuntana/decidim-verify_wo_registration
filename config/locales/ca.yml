@@ -20,3 +20,5 @@ ca:
       description: Per tal de poder participal cal que verifiquis les teves credencials a través del següent formulari
       submit_btn: Verifica
       title: Verificació del/la participant
+    create:
+      success: T'has verificat correctament. Ara tens %{minutes}min per participar.

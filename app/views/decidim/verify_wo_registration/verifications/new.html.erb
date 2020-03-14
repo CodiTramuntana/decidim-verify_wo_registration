@@ -3,7 +3,7 @@
     <div class="columns large-6 medium-centered">
       <h2 class="heading2"><%= t("verify_wo_registration.form.title") %></h2>
       <p><%= t("verify_wo_registration.form.description") %></p>
-      <%= cell("decidim/announcement", { announcement: t("verify_wo_registration.form.announcement", minutes: Decidim::ImpersonationLog::SESSION_TIME_IN_MINUTES), callout_class: "warning" }) %>
+      <%= cell("decidim/announcement", { announcement: t("verify_wo_registration.form.announcement", minutes: ::Decidim::ImpersonationLog::SESSION_TIME_IN_MINUTES), callout_class: "warning" }) %>
     </div>
   </div>
 
