@@ -7,11 +7,11 @@ end
 
 # Expects proposals_component, verification_permissions variables to exist.
 shared_examples "the component has supports_without_registration enabled" do
+  let(:verification_permissions) { create_verification_permissions }
+
   before do
     proposals_component.attributes["settings"]["global"]["supports_without_registration"]= true
     proposals_component.permissions= verification_permissions
     proposals_component.save!
   end
-
-
 end

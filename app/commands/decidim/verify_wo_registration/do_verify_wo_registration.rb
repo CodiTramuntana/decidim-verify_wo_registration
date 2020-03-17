@@ -20,30 +20,60 @@ module Decidim
       def call
         return broadcast(:invalid) unless @form.valid?
 
-        unless existing_verified_user?
+        if authorization_exists?
+          if existing_registered_user?
+            broadcast(:use_registered_user)
+          elsif existing_impersonated_user?
+            authorize_user
+            broadcast(:ok, user)
+          else
+            Rails.logger.warn("This should never happen :(")
+            broadcast(:invalid)
+          end
+        else
           transaction do
             create_user
-            create_authorizations
-            update_user_extended_data
+            authorize_user
           end
+          broadcast(:ok, user)
         end
-
-        broadcast(:ok, user)
       end
 
       private
 
-      attr_reader :user
+      attr_reader :user, :form
 
-      def existing_verified_user?
-        return unless @form.authorization_handlers.map.all? do |handler|
-          handler.send(:duplicates).any?
+      # Searches for a registered (not managed) user associated with the given form authorizations.
+      def existing_registered_user?
+        if !@authorization.user.managed?
+          @user= @authorization.user
         end
+      end
 
-        @user = User
-                .managed
-                .where(organization: current_organization)
-                .find_by("extended_data @> ?", { unique_id: @form.unique_id }.to_json)
+      # Searches for an authentication user associated to the given form authorizations
+      # The user should BE managed.
+      def existing_impersonated_user?
+        if @authorization.user.managed?
+          @user= @authorization.user
+        end
+      end
+
+      # Some authentication already exists?
+      # Saves the first found authorization to +@authorization+ attribute.
+      def authorization_exists?
+        @form.authorization_handlers.any? do |handler|
+          @authorization= Authorization.joins(:user).where('decidim_users.decidim_organization_id = ?', form.current_organization).where(
+            name: handler.handler_name,
+            unique_id: handler.unique_id
+          ).first
+        end
+      end
+
+      def authorize_user
+        transaction do
+          create_authorizations
+          update_user_extended_data
+        end
       end
 
       def create_user
@@ -52,12 +82,15 @@ module Decidim
       end
 
       def create_authorizations
-        @form.authorization_handlers.each { |handler| Authorization.create_or_update_from(handler) }
+        @form.authorization_handlers.each do |handler|
+          handler.user= @user
+          Authorization.create_or_update_from(handler)
+        end
       end
 
-      def authorizations
+      def user_authorizations
         ::Decidim::Verifications::Authorizations.new(
-          organization: current_organization,
+          organization: form.current_organization,
           user: user,
           granted: true
         ).query
@@ -67,7 +100,7 @@ module Decidim
         user.update(
           extended_data: {
             component_id: @form.component_id,
-            authorizations: authorizations.as_json(only: [:name, :granted_at, :metadata, :unique_id]),
+            authorizations: user_authorizations.as_json(only: [:name, :granted_at, :metadata, :unique_id]),
             unique_id: unique_id,
             session_expired_at: 30.minutes.from_now
           }
@@ -75,7 +108,7 @@ module Decidim
       end
 
       def unique_id
-        authorizations.pluck(:unique_id).sort.join("-")
+        user_authorizations.pluck(:unique_id).sort.join("-")
       end
     end
   end

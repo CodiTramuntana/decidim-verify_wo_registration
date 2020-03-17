@@ -12,19 +12,25 @@ module Decidim
       validates_presence_of :component_id, :redirect_url
 
       def authorization_handlers
-        ::Decidim::VerifyWoRegistration::ApplicationHelper.workflow_manifests(component).map do |manifest|
-          Decidim::AuthorizationHandler.handler_for(manifest.name, handler_params(manifest.name))
+        ::Decidim::VerifyWoRegistration::ApplicationHelper.workflow_manifests(component).map do |workflow_manifest|
+          Decidim::AuthorizationHandler.handler_for(workflow_manifest.name, handler_params(workflow_manifest.name))
         end
       end
 
+      # The authorizations from the params may be in the following format:
+      #
+      # ```
+      # {"0"=>{"handler_name"=>"dummy_authorization_handler", "document_number"=>"00000000X", "postal_code"=>"00000", "birthday"=>"23/06/6"}}
+      # ```
+      #
       def handler_params(handler_name)
-        handler_params = authorizations
-        return default_handler_params if handler_params.nil?
+        authorization_params = authorizations
+        return default_handler_params if authorization_params.nil?
 
-        handler_params = handler_params.values.find { |h| h["handler_name"] == handler_name }
-        return default_handler_params if handler_params.nil?
+        authorization_params = authorization_params.values.find { |h| h[:handler_name] == handler_name }
+        return default_handler_params if authorization_params.nil?
 
-        handler_params.merge(default_handler_params)
+        authorization_params.merge(default_handler_params)
       end
 
       def default_handler_params
@@ -34,12 +40,11 @@ module Decidim
       def new_verified_user
         @new_verified_user ||= Decidim::User.new(
           organization: current_organization,
+          admin: false,
           managed: true,
           name: Time.current.utc.to_s(:number)
         ) do |u|
           u.nickname = UserBaseEntity.nicknamize(u.name, organization: current_organization)
-          u.admin = false
-          u.roles = ["user_manager"] # Decidim::Admin::Permissions#user_manager?
           u.tos_agreement = true
         end
       end

@@ -11,7 +11,7 @@ describe "Verification process", type: :system do
   def fill_the_verification_form_for_dummy_authorization_handler
     within("#new_verify_wo_registration_") do
       fill_in "verify_wo_registration[authorizations[0]][document_number]", with: "00000000X"
-      fill_in "Postal code", with: "00000"
+      fill_in "verify_wo_registration[authorizations[0]][postal_code]", with: "00000"
       fill_in "verify_wo_registration[authorizations[0]][birthday]", with: "2000/01/01"
       click_button "Verify"
     end
@@ -19,8 +19,6 @@ describe "Verification process", type: :system do
 
   context "when correctly filling the form" do
     include_examples "has a proposal ready to vote"
-    let(:verification_permissions) { create_verification_permissions }
-
     include_examples "the component has supports_without_registration enabled"
 
     before do

@@ -25,6 +25,11 @@ module Decidim
             redirect_to @form.redirect_url
           end
 
+          on(:use_registered_user) do
+            flash.now[:alert] = I18n.t("verify_wo_registration.create.use_registered_user")
+            render :new
+          end
+
           on(:invalid) do
             flash.now[:alert] = I18n.t("impersonations.create.error", scope: "decidim.admin")
             render :new
