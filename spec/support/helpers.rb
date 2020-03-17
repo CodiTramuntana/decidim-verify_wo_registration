@@ -22,7 +22,7 @@ module Helpers
   end
 
   # Returs A Hash with a Component#permissions's value setted with a dummy_authorization_handler for the vote action.
-  def create_verification_permissions
+  def build_verification_permissions
     {"vote"=>{"authorization_handlers"=>{"dummy_authorization_handler"=>{"options"=>{"postal_code"=>"08001"}}}}}
   end
 end
