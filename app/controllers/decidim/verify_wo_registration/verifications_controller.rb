@@ -21,6 +21,7 @@ module Decidim
         DoVerifyWoRegistration.call(@form) do
           on(:ok) do |user|
             flash[:notice] = I18n.t("verify_wo_registration.create.success", minutes: ::Decidim::ImpersonationLog::SESSION_TIME_IN_MINUTES)
+
             sign_in(user)
             redirect_to @form.redirect_url
           end

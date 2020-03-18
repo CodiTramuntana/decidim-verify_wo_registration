@@ -52,8 +52,33 @@ module Decidim
       }
     end
 
-    context "when the authorization already exists" do
+    def it_sets_users_extended_data(user, granted_at=nil)
+      actual_extended_data= user.extended_data
+      if granted_at
+        actual_granted_at= DateTime.parse(actual_extended_data['authorizations'].first.delete('granted_at'))
+        expect(actual_granted_at).to be > granted_at
+      else
+        expect(actual_extended_data['authorizations'].first.delete('granted_at')).to be_present
+      end
+      expect(actual_extended_data.delete('session_expired_at')).to be_present
+      expected= {"unique_id"=>document_number, "component_id"=>proposals_component.id.to_s, "authorizations"=>[{"name"=>"dummy_authorization_handler", "metadata"=>{"postal_code"=>postal_code, "document_number"=>document_number}, "unique_id"=>document_number}]}
+      expect(actual_extended_data).to eq(expected)
+    end
+
+    describe "when no previous authorization exists" do
+      context "when verifying" do
+        it "creates a new managed user" do
+          expect { subject.call }.to change { Decidim::User.count }.by(1).and change {::Decidim::Authorization.count }.by(1)
+          it_sets_users_extended_data(Decidim::User.last)
+        end
+      end
+    end
+
+    describe "when the authorization already exists" do
       let!(:authorization) { create(:authorization, :granted, name: handler_name, metadata: metadata, unique_id: document_number, user: user) }
+      before do
+        authorization.update(granted_at: authorization.granted_at - 30.minutes)
+      end
 
       # Cas 1: Si l'usuari que intenta fer l'acció de vot, ja existeix
       #  una autorització amb aquelles dades, li ha de dir que no pot, perquè 
@@ -73,10 +98,18 @@ module Decidim
       # per tant, ha de recuperar l'autorització prèvia i fer el login amb el mateix usuari, i no crear-ne un de nou
       context "when an impersonated user with the same verification already exists" do
         let(:user) { create(:user, :managed, organization: organization) }
+
         it "update the existing authorization and login with the same user" do
           previously_granted_at= authorization.granted_at
+          user.update(extended_data: {
+            component_id: proposals_component.id,
+            authorizations: [authorization].as_json(only: [:name, :granted_at, :metadata, :unique_id]),
+            unique_id: authorization.unique_id,
+            session_expired_at: 30.minutes.ago
+          })
           expect(subject.call).to broadcast(:ok)
           expect(authorization.reload.granted_at).to be > previously_granted_at
+          it_sets_users_extended_data(user, previously_granted_at)
         end
 
         it_behaves_like "does not create a new user"

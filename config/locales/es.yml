@@ -22,3 +22,4 @@ es:
       title: Verificación del/la participante
     create:
       success: Te has verificado correctamente. Tienes %{minutes}min para participar.
+      use_registered_user: Ya existe un usuario verficado con los mismos datos. Utiliza el usuario ya existente para participar.

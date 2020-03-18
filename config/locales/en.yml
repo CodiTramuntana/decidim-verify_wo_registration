@@ -22,3 +22,4 @@ en:
       title: Participant verification
     create:
       success: You have been successfully verified. You have %{minutes}min to participate.
+      use_registered_user: There's already an existing user with your provided verification. You must use the existing user to participate.

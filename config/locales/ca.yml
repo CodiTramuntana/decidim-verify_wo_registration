@@ -22,3 +22,4 @@ ca:
       title: Verificació del/la participant
     create:
       success: T'has verificat correctament. Ara tens %{minutes}min per participar.
+      use_registered_user: Ja existeix un usuari verficat amb les mateixes dades. Cal que utilitzis l'usuari ja existent per participar.

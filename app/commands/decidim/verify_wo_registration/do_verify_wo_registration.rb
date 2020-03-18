@@ -71,7 +71,7 @@ module Decidim
 
       def authorize_user
         transaction do
-          create_authorizations
+          create_or_update_authorizations
           update_user_extended_data
         end
       end
@@ -81,9 +81,9 @@ module Decidim
         user.save!
       end
 
-      def create_authorizations
+      def create_or_update_authorizations
         @form.authorization_handlers.each do |handler|
-          handler.user= @user
+          handler.user= user
           Authorization.create_or_update_from(handler)
         end
       end

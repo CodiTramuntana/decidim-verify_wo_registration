@@ -12,8 +12,10 @@ module Decidim
       validates_presence_of :component_id, :redirect_url
 
       def authorization_handlers
-        ::Decidim::VerifyWoRegistration::ApplicationHelper.workflow_manifests(component).map do |workflow_manifest|
-          Decidim::AuthorizationHandler.handler_for(workflow_manifest.name, handler_params(workflow_manifest.name))
+        @authorization_handlers||= begin
+          ::Decidim::VerifyWoRegistration::ApplicationHelper.workflow_manifests(component).map do |workflow_manifest|
+            Decidim::AuthorizationHandler.handler_for(workflow_manifest.name, handler_params(workflow_manifest.name))
+          end
         end
       end
 
@@ -27,7 +29,7 @@ module Decidim
         authorization_params = authorizations
         return default_handler_params if authorization_params.nil?
 
-        authorization_params = authorization_params.values.find { |h| h[:handler_name] == handler_name }
+        authorization_params = authorization_params.values.find { |h| h.with_indifferent_access[:handler_name] == handler_name }
         return default_handler_params if authorization_params.nil?
 
         authorization_params.merge(default_handler_params)
