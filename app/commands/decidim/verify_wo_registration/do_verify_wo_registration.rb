@@ -20,7 +20,7 @@ module Decidim
       def call
         return broadcast(:invalid) unless @form.valid?
 
-        if authorization_exists?
+        if authorizations_exists?
           if existing_registered_user?
             broadcast(:use_registered_user)
           elsif existing_impersonated_user?
@@ -60,7 +60,7 @@ module Decidim
 
       # Some authentication already exists?
       # Saves the first found authorization to +@authorization+ attribute.
-      def authorization_exists?
+      def authorizations_exists?
         @form.authorization_handlers.any? do |handler|
           @authorization= Authorization.joins(:user).where('decidim_users.decidim_organization_id = ?', form.current_organization).where(
             name: handler.handler_name,

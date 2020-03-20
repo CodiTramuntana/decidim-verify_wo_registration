@@ -53,7 +53,7 @@ module Decidim
     end
 
     def it_sets_users_extended_data(user, granted_at=nil)
-      actual_extended_data= user.extended_data
+      actual_extended_data= user.reload.extended_data
       if granted_at
         actual_granted_at= DateTime.parse(actual_extended_data['authorizations'].first.delete('granted_at'))
         expect(actual_granted_at).to be > granted_at

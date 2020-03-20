@@ -16,7 +16,7 @@ gem "uglifier"
 group :development, :test do
   gem "decidim", DECIDIM_VERSION
   gem "bootsnap"
-  gem "byebug", "~> 11.0", platform: :mri
+  gem "pry"
 
   gem "decidim-dev", git: "https://github.com/decidim/decidim"
 end
