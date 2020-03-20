@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "decidim/core/test/factories"
+require 'decidim/core/test/factories'
 
 FactoryBot.define do
   factory :verify_wo_registration_component, parent: :component do

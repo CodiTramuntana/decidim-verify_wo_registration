@@ -20,19 +20,19 @@ module Decidim
 
         DoVerifyWoRegistration.call(@form) do
           on(:ok) do |user|
-            flash[:notice] = I18n.t("verify_wo_registration.create.success", minutes: ::Decidim::ImpersonationLog::SESSION_TIME_IN_MINUTES)
+            flash[:notice] = I18n.t('verify_wo_registration.create.success', minutes: ::Decidim::ImpersonationLog::SESSION_TIME_IN_MINUTES)
 
             sign_in(user)
             redirect_to @form.redirect_url
           end
 
           on(:use_registered_user) do
-            flash.now[:alert] = I18n.t("verify_wo_registration.create.use_registered_user")
+            flash.now[:alert] = I18n.t('verify_wo_registration.create.use_registered_user')
             render :new
           end
 
           on(:invalid) do
-            flash.now[:alert] = I18n.t("impersonations.create.error", scope: "decidim.admin")
+            flash.now[:alert] = I18n.t('impersonations.create.error', scope: 'decidim.admin')
             render :new
           end
         end
@@ -44,7 +44,7 @@ module Decidim
         {
           authorizations: verify_params[:authorizations],
           component_id: component.id,
-          redirect_url: verify_params[:redirect_url],
+          redirect_url: verify_params[:redirect_url]
         }
       end
 
@@ -60,7 +60,7 @@ module Decidim
       def validate_verification_workflow_manifests!
         return if all_verifications_of_type_direct?(component)
 
-        raise "Invalid verifications, all verifications should be of type direct"
+        raise 'Invalid verifications, all verifications should be of type direct'
       end
     end
   end

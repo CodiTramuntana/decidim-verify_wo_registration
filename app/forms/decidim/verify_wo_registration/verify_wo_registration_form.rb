@@ -12,7 +12,7 @@ module Decidim
       validates_presence_of :component_id, :redirect_url
 
       def authorization_handlers
-        @authorization_handlers||= begin
+        @authorization_handlers ||= begin
           ::Decidim::VerifyWoRegistration::ApplicationHelper.workflow_manifests(component).map do |workflow_manifest|
             Decidim::AuthorizationHandler.handler_for(workflow_manifest.name, handler_params(workflow_manifest.name))
           end
@@ -48,13 +48,15 @@ module Decidim
         ) do |u|
           u.nickname = UserBaseEntity.nicknamize(u.name, organization: current_organization)
           u.tos_agreement = true
+          u.skip_confirmation!
         end
       end
 
       def component
-        @component||= begin
-          c= Decidim::Component.find(component_id)
+        @component ||= begin
+          c = Decidim::Component.find(component_id)
           raise ArgumentError unless c.participatory_space.organization.id == current_organization.id
+
           c
         end
       end

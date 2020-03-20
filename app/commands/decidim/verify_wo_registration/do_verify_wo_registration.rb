@@ -27,7 +27,7 @@ module Decidim
             authorize_user
             broadcast(:ok, user)
           else
-            Rails.logger.warn("This should never happen :(")
+            Rails.logger.warn('This should never happen :(')
             broadcast(:invalid)
           end
         else
@@ -45,16 +45,15 @@ module Decidim
 
       # Searches for a registered (not managed) user associated with the given form authorizations.
       def existing_registered_user?
-        if !@authorization.user.managed?
-          @user= @authorization.user
-        end
+        @user = @authorization.user unless @authorization.user.managed?
       end
 
       # Searches for an authentication user associated to the given form authorizations
       # The user should BE managed.
       def existing_impersonated_user?
         if @authorization.user.managed?
-          @user= @authorization.user
+          @user = @authorization.user
+          user.skip_confirmation!
         end
       end
 
@@ -62,7 +61,7 @@ module Decidim
       # Saves the first found authorization to +@authorization+ attribute.
       def authorizations_exists?
         @form.authorization_handlers.any? do |handler|
-          @authorization= Authorization.joins(:user).where('decidim_users.decidim_organization_id = ?', form.current_organization).where(
+          @authorization = Authorization.joins(:user).where('decidim_users.decidim_organization_id = ?', form.current_organization).where(
             name: handler.handler_name,
             unique_id: handler.unique_id
           ).first
@@ -77,13 +76,13 @@ module Decidim
       end
 
       def create_user
-        @user= @form.authorization_handlers.first.user
+        @user = @form.authorization_handlers.first.user
         user.save!
       end
 
       def create_or_update_authorizations
         @form.authorization_handlers.each do |handler|
-          handler.user= user
+          handler.user = user
           Authorization.create_or_update_from(handler)
         end
       end
@@ -100,7 +99,7 @@ module Decidim
         user.update(
           extended_data: {
             component_id: @form.component_id,
-            authorizations: user_authorizations.as_json(only: [:name, :granted_at, :metadata, :unique_id]),
+            authorizations: user_authorizations.as_json(only: %i[name granted_at metadata unique_id]),
             unique_id: unique_id,
             session_expired_at: 30.minutes.from_now
           }
@@ -108,7 +107,7 @@ module Decidim
       end
 
       def unique_id
-        user_authorizations.pluck(:unique_id).sort.join("-")
+        user_authorizations.pluck(:unique_id).sort.join('-')
       end
     end
   end
