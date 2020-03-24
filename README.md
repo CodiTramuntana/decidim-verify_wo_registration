@@ -21,6 +21,21 @@ And then execute:
 bundle
 ```
 
+## Usage
+
+This module allows admins to enable participants to open sessions from Proposals and Budgets components (login in) without being registered.
+
+For this feature to be enabled admins should do two things:
+
+- navigate to the corresponding component, select the "Enable suports without registration (user only verifies)" ("Poder donar suports sense registre (només verificant-se)") check and save.
+- navigate to this component's permissions, and select a direct verifier for some of its actions. Note that multi-step verifiers are not supported.
+
+This will enable the feature in the public views.
+
+Once enabled, non registered (thus not logged in) participants will have to navigate to the given component (a proposal or a budget) and click in the support/vote/select project action. The login modal now will have a new "I have no user and I do not want to" button that takes the participant to a verification screen. Once the user is correctly verified, a 30min session starts for her to participate.
+
+Note that although the only way for participants to open a session is by clicking the "Support" button, once verified, she will be able to perform all the actions that require the authentications she has verified for.
+
 ### Run tests
 
 Create a dummy app in your application (if not present):
