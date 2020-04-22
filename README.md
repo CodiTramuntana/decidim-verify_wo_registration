@@ -12,7 +12,7 @@ Space.
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'decidim-verify_wo_registration
+gem 'decidim-verify_wo_registration'
 ```
 
 And then execute:
