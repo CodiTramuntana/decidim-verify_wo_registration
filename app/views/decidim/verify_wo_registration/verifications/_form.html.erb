@@ -2,7 +2,7 @@
   <div class="card-section">
     <div class="card__header collapse">
       <h5 class="card__title">
-        <%= t("authorize_with", authorizer: handler.handler_name, scope: "decidim.verifications.authorizations.new") %>
+        <%= t("authorize_with", authorizer: t("#{handler.handler_name}.name", scope: "decidim.authorization_handlers"), scope: "decidim.verifications.authorizations.new") %>
       </h5>
     </div>
 
