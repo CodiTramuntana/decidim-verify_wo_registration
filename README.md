@@ -2,11 +2,6 @@
 
 Adds the hability for proposals and budgets components to allow users to give support without being registered. Enabling this feature the user is requested for verification and then, on success, logged in in a 30min session..
 
-## Usage
-
-VerifyWoRegistration will be available as a Component for a Participatory
-Space.
-
 ## Installation
 
 Add this line to your application's Gemfile:
