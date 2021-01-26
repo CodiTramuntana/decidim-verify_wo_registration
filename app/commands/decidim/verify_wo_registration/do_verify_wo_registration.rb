@@ -31,17 +31,34 @@ module Decidim
             broadcast(:invalid)
           end
         else
-          transaction do
-            create_user
-            authorize_user
+          if authorization_data_ok?
+              transaction do
+                create_user
+                authorize_user
+              end
+              broadcast(:ok, user)
+          else
+            broadcast(:invalid)
           end
-          broadcast(:ok, user)
         end
       end
 
       private
 
       attr_reader :user, :form
+
+      #Checks if submitted verification data matches that of census
+      def authorization_data_ok?
+        @form.authorization_handlers.any? do |handler|
+          census = Decidim::FileAuthorizationHandler::CensusDatum.search_id_document(form.current_organization, handler.id_document)  
+          if census
+            if (census.birthdate != handler.birthdate)
+              census = nil
+            end
+            census
+          end
+        end
+      end
 
       # Searches for a registered (not managed) user associated with the given form authorizations.
       def existing_registered_user?
@@ -60,12 +77,13 @@ module Decidim
       # Some authentication already exists?
       # Saves the first found authorization to +@authorization+ attribute.
       def authorizations_exists?
-        @form.authorization_handlers.any? do |handler|
-          @authorization = Authorization.joins(:user).where('decidim_users.decidim_organization_id = ?', form.current_organization).where(
-            name: handler.handler_name,
-            unique_id: handler.unique_id
-          ).first
-        end
+        #@form.authorization_handlers.any? do |handler|
+        #  @authorization = Authorization.joins(:user).where('decidim_users.decidim_organization_id = ?', form.current_organization).where(
+        #    name: handler.handler_name,
+        #    unique_id: handler.unique_id
+        #  ).first
+        #end
+	false
       end
 
       def authorize_user
