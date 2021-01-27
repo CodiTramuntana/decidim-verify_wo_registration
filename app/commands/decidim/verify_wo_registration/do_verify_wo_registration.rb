@@ -20,10 +20,20 @@ module Decidim
       def call
         if authorizations_exists?
           if existing_registered_user?
+            # ignore form data, make the participant use the already existing user
             broadcast(:use_registered_user)
           elsif existing_impersonated_user?
-            authorize_user
-            broadcast(:ok, user)
+            # we can not reuse existing authorization because it will raise "A participant is already authorized with the same data." on @form.valid?
+            # as it is an impersonated user, we can safely destroy it and perform the verification process again
+            transaction do
+              destroy_authorization
+              if @form.valid?
+                authorize_user
+                broadcast(:ok, user)
+              else
+                broadcast(:invalid)
+              end
+            end
           else
             Rails.logger.warn('This should never happen :(')
             broadcast(:invalid)
@@ -39,7 +49,9 @@ module Decidim
         end
       end
 
+      #----------------------------------------------------------------------
       private
+      #----------------------------------------------------------------------
 
       attr_reader :user, :form
 
@@ -66,6 +78,10 @@ module Decidim
             unique_id: handler.unique_id
           ).first
         end
+      end
+
+      def destroy_authorization
+        @authorization.destroy
       end
 
       def authorize_user
