@@ -1,6 +1,6 @@
 # Decidim::VerifyWoRegistration
 
-Adds the hability for proposals and budgets components to allow users to give support without being registered. Enabling this feature the user is requested for verification and then, on success, logged in in a 30min session..
+Adds the hability for proposals and budgets components to allow users to give support without being registered. Enabling this feature the user is requested for verification and then, on success, logged in into a 30min session.
 
 ## Installation
 
@@ -13,7 +13,7 @@ gem 'decidim-verify_wo_registration'
 And then execute:
 
 ```bash
-bundle
+bundle install
 ```
 
 ## Usage
