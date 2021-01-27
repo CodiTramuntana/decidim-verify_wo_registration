@@ -77,13 +77,15 @@ module Decidim
       # Some authentication already exists?
       # Saves the first found authorization to +@authorization+ attribute.
       def authorizations_exists?
-        #@form.authorization_handlers.any? do |handler|
-        #  @authorization = Authorization.joins(:user).where('decidim_users.decidim_organization_id = ?', form.current_organization).where(
-        #    name: handler.handler_name,
-        #    unique_id: handler.unique_id
-        #  ).first
-        #end
-	false
+        @form.authorization_handlers.any? do |handler|
+              @authorization = Authorization.joins(:user).where('decidim_users.decidim_organization_id = ?', form.current_organization).where(
+                name: handler.handler_name,
+                unique_id: handler.unique_id
+              )
+              .where("metadata->>'birthdate' = ?",handler.birthdate.to_s.gsub('-','/'))
+              .first
+          @authorization
+        end
       end
 
       def authorize_user
