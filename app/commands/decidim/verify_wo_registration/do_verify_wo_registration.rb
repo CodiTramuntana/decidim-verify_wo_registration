@@ -18,8 +18,6 @@ module Decidim
       #
       # Returns nothing.
       def call
-        return broadcast(:invalid) unless @form.valid?
-
         if authorizations_exists?
           if existing_registered_user?
             broadcast(:use_registered_user)
@@ -30,12 +28,14 @@ module Decidim
             Rails.logger.warn('This should never happen :(')
             broadcast(:invalid)
           end
-        else
+        elsif @form.valid?
           transaction do
             create_user
             authorize_user
           end
           broadcast(:ok, user)
+        else
+          broadcast(:invalid)
         end
       end
 
@@ -58,7 +58,7 @@ module Decidim
       end
 
       # Some authentication already exists?
-      # Saves the first found authorization to +@authorization+ attribute.
+      # Sets the first found authorization to +@authorization+ attribute.
       def authorizations_exists?
         @form.authorization_handlers.any? do |handler|
           @authorization = Authorization.joins(:user).where('decidim_users.decidim_organization_id = ?', form.current_organization).where(
