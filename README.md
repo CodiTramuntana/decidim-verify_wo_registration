@@ -38,8 +38,7 @@ Note that although the only way for participants to open a session is by clickin
 ### Warning
 
 Platform administrators should take care not to reset authorizations while in the middle of a process.
-Reseting authorizations will remove `Authentication`s from existing impersonated users. This will allow participants to vote again in the same process via this module or
-being "manually" impersonated.
+Reseting verifications will remove `Authorization`s from existing impersonated users. This will allow participants to vote again in the same process with the same credentials via this module or being "manually" impersonated.
 
 ## Run tests
 
