@@ -35,7 +35,13 @@ Once enabled, non registered (thus not logged in) participants will have to navi
 
 Note that although the only way for participants to open a session is by clicking the "Support" button, once verified, she will be able to perform all the actions that require the authentications she has verified for.
 
-### Run tests
+### Warning
+
+Platform administrators should take care not to reset authorizations while in the middle of a process.
+Reseting authorizations will remove `Authentication`s from existing impersonated users. This will allow participants to vote again in the same process via this module or
+being "manually" impersonated.
+
+## Run tests
 
 Create a dummy app in your application (if not present):
 
