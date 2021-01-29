@@ -63,15 +63,20 @@ module Decidim
         end
       end
 
+      # Provides the handler that verified the user data to the command
+      def verified_handler
+        @verified_handler
+      end
+
       # ----------------------------------------------------------------------
       private
       # ----------------------------------------------------------------------
 
       # Check if the data introduced by the user verifies against any handler enabled for the current component.
       def verify_against_enabled_authorization_handlers
-        verifies_w_some_handler= authorization_handlers.any? {|handler| handler.valid? }
+        @verified_handler= authorization_handlers.find {|handler| handler.valid? }
 
-        errors.add(:authorizations, :invalid) unless verifies_w_some_handler
+        errors.add(:authorizations, :invalid) unless @verified_handler
       end
     end
   end
