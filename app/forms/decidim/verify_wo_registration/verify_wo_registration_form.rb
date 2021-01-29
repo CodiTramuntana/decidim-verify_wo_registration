@@ -10,7 +10,9 @@ module Decidim
       attribute :redirect_url, String
 
       validates_presence_of :component_id, :redirect_url
+      validate :verify_against_enabled_authorization_handlers
 
+      # Returns authorization_handlers that were configured for the current component
       def authorization_handlers
         @authorization_handlers ||= begin
           ::Decidim::VerifyWoRegistration::ApplicationHelper.workflow_manifests(component).map do |workflow_manifest|
@@ -59,6 +61,22 @@ module Decidim
 
           c
         end
+      end
+
+      # Provides the handler that verified the user data to the command
+      def verified_handler
+        @verified_handler
+      end
+
+      # ----------------------------------------------------------------------
+      private
+      # ----------------------------------------------------------------------
+
+      # Check if the data introduced by the user verifies against any handler enabled for the current component.
+      def verify_against_enabled_authorization_handlers
+        @verified_handler= authorization_handlers.find {|handler| handler.valid? }
+
+        errors.add(:authorizations, :invalid) unless @verified_handler
       end
     end
   end

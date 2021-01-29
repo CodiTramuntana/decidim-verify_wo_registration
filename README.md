@@ -1,11 +1,10 @@
 # Decidim::VerifyWoRegistration
 
-Adds the hability for proposals and budgets components to allow users to give support without being registered. Enabling this feature the user is requested for verification and then, on success, logged in in a 30min session..
+Adds the hability for proposals and budgets components to allow users to give support without being registered. Enabling this feature the user is requested for verification and then, on success, logged in into a 30min session.
 
-## Usage
-
-VerifyWoRegistration will be available as a Component for a Participatory
-Space.
+The current behavior is as follows. When the logged out user arrives to an action that requires verifiaction the popup offers a new option to allow the user to open a temporal session without the need to signup to the platform. Once selected the form for the first direct verifier found is rendered to the user to fill it.
+On submit, first checks if there's already an authorization for the first direct verifier. If an authorization exists, redirects back and tells the user to use the already verified account, if not, then tries to verify the user with the current data in the form.
+A special case are impersonated (managed) users that are re-authenticated every time.
 
 ## Installation
 
@@ -18,7 +17,7 @@ gem 'decidim-verify_wo_registration'
 And then execute:
 
 ```bash
-bundle
+bundle install
 ```
 
 ## Usage

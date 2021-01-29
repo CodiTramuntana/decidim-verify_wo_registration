@@ -38,7 +38,9 @@ module Decidim
         end
       end
 
+      # -------------------------------------------------------------
       private
+      # -------------------------------------------------------------
 
       def form_params
         {
@@ -58,7 +60,7 @@ module Decidim
 
       # Should we validate that only 'direct' verification handlers are enabled?
       def validate_verification_workflow_manifests!
-        return if all_verifications_of_type_direct?(component)
+        return if Decidim::VerifyWoRegistration::ApplicationHelper.verify_wo_registration_custom_modal?(component)
 
         raise 'Invalid verifications, all verifications should be of type direct'
       end

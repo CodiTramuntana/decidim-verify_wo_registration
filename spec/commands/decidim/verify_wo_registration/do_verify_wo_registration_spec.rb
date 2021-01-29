@@ -99,7 +99,7 @@ module Decidim
       context 'when an impersonated user with the same verification already exists' do
         let(:user) { create(:user, :managed, organization: organization) }
 
-        it 'update the existing authorization and login with the same user' do
+        it 'destroy the existing authorization and login with the same user' do
           previously_granted_at = authorization.granted_at
           user.update(extended_data: {
                         component_id: proposals_component.id,
@@ -108,7 +108,8 @@ module Decidim
                         session_expired_at: 30.minutes.ago
                       })
           expect(subject.call).to broadcast(:ok)
-          expect(authorization.reload.granted_at).to be > previously_granted_at
+          expect(Decidim::Authorization.exists?(authorization.id)).to be_falsey
+          expect(Decidim::Authorization.find_by(decidim_user_id: user.id).granted_at).to be > previously_granted_at
           it_sets_users_extended_data(user, previously_granted_at)
         end
 

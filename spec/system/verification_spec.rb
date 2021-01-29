@@ -4,11 +4,11 @@ require 'spec_helper'
 
 describe 'Verification process', type: :system do
   shared_examples 'verifies without being registered' do
-    def fill_the_verification_form_for_dummy_authorization_handler
+    def fill_the_verification_form_for_dummy_authorization_handler(data)
       within('#new_verify_wo_registration_') do
-        fill_in 'verify_wo_registration[authorizations[0]][document_number]', with: '00000000X'
-        fill_in 'verify_wo_registration[authorizations[0]][postal_code]', with: '00000'
-        fill_in 'verify_wo_registration[authorizations[0]][birthday]', with: '2000/01/01'
+        fill_in 'verify_wo_registration[authorizations[0]][document_number]', with: data[:document_number]
+        fill_in 'verify_wo_registration[authorizations[0]][postal_code]', with: data[:postal_code]
+        fill_in 'verify_wo_registration[authorizations[0]][birthday]', with: data[:birthday]
         click_button 'Verify'
       end
     end
@@ -16,13 +16,25 @@ describe 'Verification process', type: :system do
     context 'when correctly filling the form' do
       before do
         click_verify_only
-        fill_the_verification_form_for_dummy_authorization_handler
+        fill_the_verification_form_for_dummy_authorization_handler(document_number: '00000000X', postal_code: '00000', birthday: '2000/01/01')
       end
 
       it 'redirects to the previous page and renders a notice' do
         resource_title= resource.title.kind_of?(Hash) ? translated(resource.title) : resource.title
         expect(page).to have_content(resource_title)
         expect(page).to have_content('You have been successfully verified. You have 30min to participate.')
+      end
+    end
+
+    context 'when filling the form with incorrect data' do
+      before do
+        click_verify_only
+        fill_the_verification_form_for_dummy_authorization_handler(document_number: '12345678A', postal_code: '12345', birthday: '2021/01/27')
+      end
+
+      it 'redirects back to the form and renders the error' do
+        expect(page).to have_selector('#new_verify_wo_registration_')
+        expect(page).to have_content('There was a problem managing the participant.')
       end
     end
   end

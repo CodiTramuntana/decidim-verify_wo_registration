@@ -18,28 +18,40 @@ module Decidim
       #
       # Returns nothing.
       def call
-        return broadcast(:invalid) unless @form.valid?
-
         if authorizations_exists?
           if existing_registered_user?
+            # ignore form data, make the participant use the already existing user
             broadcast(:use_registered_user)
           elsif existing_impersonated_user?
-            authorize_user
-            broadcast(:ok, user)
+            # we can not reuse existing authorization because it will raise "A participant is already authorized with the same data." on @form.valid?
+            # as it is an impersonated user, we can safely destroy it and perform the verification process again
+            transaction do
+              destroy_authorization
+              if @form.valid?
+                authorize_user
+                broadcast(:ok, user)
+              else
+                broadcast(:invalid)
+              end
+            end
           else
             Rails.logger.warn('This should never happen :(')
             broadcast(:invalid)
           end
-        else
+        elsif @form.valid?
           transaction do
             create_user
             authorize_user
           end
           broadcast(:ok, user)
+        else
+          broadcast(:invalid)
         end
       end
 
+      #----------------------------------------------------------------------
       private
+      #----------------------------------------------------------------------
 
       attr_reader :user, :form
 
@@ -58,7 +70,7 @@ module Decidim
       end
 
       # Some authentication already exists?
-      # Saves the first found authorization to +@authorization+ attribute.
+      # Sets the first found authorization to +@authorization+ attribute.
       def authorizations_exists?
         @form.authorization_handlers.any? do |handler|
           @authorization = Authorization.joins(:user).where('decidim_users.decidim_organization_id = ?', form.current_organization).where(
@@ -68,9 +80,13 @@ module Decidim
         end
       end
 
+      def destroy_authorization
+        @authorization.destroy
+      end
+
       def authorize_user
         transaction do
-          create_or_update_authorizations
+          create_or_update_authorization
           update_user_extended_data
         end
       end
@@ -80,11 +96,10 @@ module Decidim
         user.save!
       end
 
-      def create_or_update_authorizations
-        @form.authorization_handlers.each do |handler|
-          handler.user = user
-          Authorization.create_or_update_from(handler)
-        end
+      def create_or_update_authorization
+        handler= @form.verified_handler
+        handler.user = user
+        Authorization.create_or_update_from(handler)
       end
 
       def user_authorizations
