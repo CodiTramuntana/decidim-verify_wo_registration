@@ -26,6 +26,8 @@ module Decidim
             # we can not reuse existing authorization because it will raise "A participant is already authorized with the same data." on @form.valid?
             # as it is an impersonated user, we can safely destroy it and perform the verification process again
             transaction do
+              @user = @authorization.user
+              user.skip_confirmation!
               destroy_authorization
               if @form.valid?
                 authorize_user
@@ -60,13 +62,8 @@ module Decidim
         @user = @authorization.user unless @authorization.user.managed?
       end
 
-      # Searches for an authentication user associated to the given form authorizations
-      # The user should BE managed.
       def existing_impersonated_user?
-        if @authorization.user.managed?
-          @user = @authorization.user
-          user.skip_confirmation!
-        end
+        @authorization.user.managed?
       end
 
       # Some authentication already exists?
