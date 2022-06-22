@@ -21,8 +21,8 @@ module Decidim
         end
       end
 
-      initializer 'decidim_verify_wo_registration.assets' do |app|
-        app.config.assets.precompile += %w[decidim_verify_wo_registration_manifest.js decidim_verify_wo_registration_manifest.css]
+      initializer "decidim_verify_wo_registration.webpacker.assets_path" do
+        Decidim.register_assets_path File.expand_path("app/packs", root)
       end
     end
   end
