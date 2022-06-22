@@ -25,11 +25,11 @@ Decidim::Webpacker.register_path("#{base_path}/app/packs")
 # If you want to import some extra SCSS files in the Decidim main SCSS file
 # without adding any extra stylesheet inclusion tags, you can use the following
 # method to register the stylesheet import for the main application.
-Decidim::Webpacker.register_stylesheet_import("stylesheets/decidim/verify_wo_registration/engine")
+#Decidim::Webpacker.register_stylesheet_import("stylesheets/decidim/verify_wo_registration/engine")
 
 # If you want to do the same but include the SCSS file for the admin panel's
 # main SCSS file, you can use the following method.
-Decidim::Webpacker.register_stylesheet_import("stylesheets/decidim/verify_wo_registration/admin_engine", group: :admin)
+#Decidim::Webpacker.register_stylesheet_import("stylesheets/decidim/verify_wo_registration/admin_engine", group: :admin)
 
 # If you want to override some SCSS variables/settings for Foundation from the
 # module, you can add the following registered import.
