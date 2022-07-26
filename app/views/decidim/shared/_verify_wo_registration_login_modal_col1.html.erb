@@ -1,18 +1,10 @@
-<div class="row">
-  <div class="columns medium-10 medium-centered">
-    <div class="text-center">
-      <% votable_gid  = "gid" %>
-      <% params = {component_id: current_component.id,
+<div class="columns medium-centered">
+  <div class="text-center">
+    <%= link_to(t("verify_wo_registration.login_modal.col1_only_verify_btn"),
+                Decidim::VerifyWoRegistration::Engine.routes.url_helpers.new_verification_path({
+                  component_id: current_component.id,
                   redirect_url: URI(request.original_fullpath).path,
-                  votable_gid: votable_gid} %>
-      <%= link_to(t("verify_wo_registration.login_modal.col1_only_verify_btn"), 
-      # decidim.new_verify_wo_registration_verification_path(params)
-      Decidim::VerifyWoRegistration::Engine.routes.url_helpers.new_verification_path(params), class: "button expanded") %>
-    </div>
-  </div>
-  <div class="columns medium-10 medium-centered">
-    <div class="text-center">
-      <%= link_to t("decidim.shared.login_modal.sign_up"), decidim.new_user_registration_path, class: "sign-up-link button expanded" %>
-    </div>
+                  votable_gid: "gid"
+                }), class: "button expanded") %>
   </div>
 </div>

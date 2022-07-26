@@ -13,8 +13,9 @@ ca:
   verify_wo_registration:
     login_modal:
       title: Per tal de poder participar cal que et verifiquis. Com et vols verificar?
-      col1_only_verify_btn: Només vull verificar-me (no tinc usuari i no em vull registrar)
-      col2_title: Ja tinc un usuari, vull fer login
+      col1_only_verify_btn: Verifica't sense registre
+      col2_title: Ja tinc un compte. Inicia la sessió i verifica't
+      col1_title: No tinc compte i no em vull registar
     form:
       announcement: La sessió expirarà en %{minutes} minuts
       description: Per tal de poder participal cal que verifiquis les teves credencials a través del següent formulari
