@@ -26,7 +26,7 @@ This module allows admins to enable participants to open sessions from Proposals
 
 For this feature to be enabled admins should do two things:
 
-- navigate to the corresponding component, select the "Enable suports without registration (user only verifies)" ("Poder donar suports sense registre (només verificant-se)") check and save.
+- navigate to the corresponding component, select the "Enable supports without registration (user only verifies)" ("Poder donar suports sense registre (només verificant-se)") check and save.
 - navigate to this component's permissions, and select a direct verifier for some of its actions. Note that multi-step verifiers are not supported.
 
 This will enable the feature in the public views.
