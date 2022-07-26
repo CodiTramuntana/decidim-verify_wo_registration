@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 
 ruby RUBY_VERSION
 
-DECIDIM_VERSION = { git: 'https://github.com/decidim/decidim', branch: "release/0.25-stable"  }.freeze
+DECIDIM_VERSION = { git: 'https://github.com/decidim/decidim', branch: "release/0.26-stable"  }.freeze
 gem 'decidim-budgets', DECIDIM_VERSION
 gem 'decidim-core', DECIDIM_VERSION
 gem 'decidim-proposals', DECIDIM_VERSION
@@ -18,11 +18,11 @@ group :development, :test do
   gem 'decidim', DECIDIM_VERSION
   gem 'pry'
 
-  gem 'decidim-dev', git: 'https://github.com/decidim/decidim'
+  gem 'decidim-dev', DECIDIM_VERSION
 end
 
 group :development do
-  gem 'faker', '~> 1.9'
+  gem 'faker', '~> 2.14'
   gem 'letter_opener_web', '~> 1.3'
   gem 'listen', '~> 3.1'
   gem 'spring', '~> 2.0'
