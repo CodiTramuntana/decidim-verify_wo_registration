@@ -10,7 +10,7 @@ module Decidim
       end
 
       def self.workflow_manifests(component)
-        return [] unless component.permissions&.any?
+        return [] if component.permissions&.blank? || component.permissions["vote"].blank?
 
         Decidim::Verifications::Adapter.from_collection(
           # component.permissions returns a structure of the form:
