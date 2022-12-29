@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.authors = ['Oliver Valls']
   s.email = ['oliver.vh@coditramuntana.com']
   s.license = 'MIT'
-  s.homepage = 'https://github.com/decidim/decidim-verify_wo_registration'
+  s.homepage = 'https://github.com/CodiTramuntana/decidim-verify_wo_registration'
   s.required_ruby_version = '>= 2.5'
 
   s.name = 'decidim-verify_wo_registration'
@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
 
   s.files = Dir['{app,config,lib}/**/*', 'LICENSE-MIT.txt', 'Rakefile', 'README.md']
 
-  DECIDIM_VER = '>= 0.20'
+  DECIDIM_VER = '>= 0.26'
   s.add_dependency 'decidim-budgets', DECIDIM_VER
   s.add_dependency 'decidim-core', DECIDIM_VER
   s.add_dependency 'decidim-proposals', DECIDIM_VER
