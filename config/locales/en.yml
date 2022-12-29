@@ -13,8 +13,9 @@ en:
   verify_wo_registration:
     login_modal:
       title: To participate you must be verified. How do you want to verify?
-      col1_only_verify_btn: I have no user and I do not want to
-      col2_title: I already have a user, I want to login
+      col1_only_verify_btn: Verify without signup
+      col2_title: I already have an account. Login to verify yourself
+      col1_title: I don't have account and I don't want to signup
     form:
       announcement: The session will expire in %{minutes} minutes
       description: You must verify your credentials through the following form in order to be able to participate

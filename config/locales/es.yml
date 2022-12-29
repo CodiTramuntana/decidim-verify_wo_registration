@@ -13,8 +13,9 @@ es:
   verify_wo_registration:
     login_modal:
       title: Por tal de poder participar hace falta que te verifiques. ¿Cómo te quieres verificar?
-      col1_only_verify_btn: Sólo quiero verificarmee (no tengo usuario y i no me quiero registrar)
-      col2_title: Ya tengo un usuario, quiero hacer login
+      col1_only_verify_btn: Verifícate sin registro
+      col2_title: Ya tengo una cuenta. Inicia la sesión y verifícate
+      col1_title: No tengo cuenta y no me quiero registrar
     form:
       announcement: La sessióm expirará en %{minutes} minutos
       description: Por tal de poder participal hace falta que verifiques tus credenciales a través del siguiente formulario

@@ -7,22 +7,17 @@
     </button>
   </div>
   <div class="row">
-    <div class="columns medium-6" style="margin-top: 60px;">
-      <div class="row">
-        <div class="columns medium-10 medium-centered">
-          <div class="content" style="background: rgba(239, 96, 77, 0.2);border-radius: 5px;padding: 2rem;">
-            <%= render "decidim/shared/verify_wo_registration_login_modal_col1" %>
-          </div>  
+    <div class="columns medium-6">
+        <div class="columns medium-centered">
+          <h5><%= t("verify_wo_registration.login_modal.col1_title") %></h5>
+          <%= render "decidim/shared/verify_wo_registration_login_modal_col1" %>
         </div>
-      </div>
     </div>
     <div class="columns medium-6">
-      <div class="row">
-        <div class="columns medium-10 medium-centered">
+        <div class="columns medium-centered">
           <h5><%= t("verify_wo_registration.login_modal.col2_title") %></h5>
           <%= render "decidim/shared/verify_wo_registration_login_modal_col2" %>
         </div>
-      </div>
     </div>
   </div>
 </div>

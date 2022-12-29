@@ -30,8 +30,8 @@ module Helpers
 
   # In the loginModal, click the button to start verifying.
   def click_verify_only
-    within '#loginModal .row .content', match: :first do
-      click_link 'I have no user and I do not want to'
+    within '#loginModal .row', match: :first do
+      click_link 'Verify without signup'
     end
     expect(page).to have_content('Participant verification')
   end

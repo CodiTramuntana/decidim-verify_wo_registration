@@ -20,9 +20,11 @@
   <p class="text-center">
     <%= link_to t("devise.shared.links.forgot_your_password"), new_password_path(:user) %>
   </p>
-  <%= render "decidim/devise/shared/omniauth_buttons_mini" %>
+  <div style="box-sizing: unset">
+    <%= render "decidim/devise/shared/omniauth_buttons_mini" %>
+  </div>
 <% else %>
-  <p>
+  <p style="box-sizing: unset">
     <%= t("sign_in_disabled", scope: "decidim.devise.sessions.new") %>
   </p>
   <%= render "decidim/devise/shared/omniauth_buttons" %>
