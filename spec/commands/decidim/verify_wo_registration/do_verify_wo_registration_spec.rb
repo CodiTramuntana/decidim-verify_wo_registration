@@ -19,7 +19,8 @@ module Decidim
       {
         document_number: document_number,
         postal_code: postal_code,
-        birthday: birthday
+        birthday: birthday,
+        scope_id: nil
       }
     end
     let(:handler_name) { 'dummy_authorization_handler' }
@@ -61,7 +62,7 @@ module Decidim
         expect(actual_extended_data['authorizations'].first.delete('granted_at')).to be_present
       end
       expect(actual_extended_data.delete('session_expired_at')).to be_present
-      expected = { 'unique_id' => document_number, 'component_id' => proposals_component.id.to_s, 'authorizations' => [{ 'name' => 'dummy_authorization_handler', 'metadata' => { 'postal_code' => postal_code, 'document_number' => document_number }, 'unique_id' => document_number }] }
+      expected = { 'unique_id' => document_number, 'component_id' => proposals_component.id.to_s, 'authorizations' => [{ 'name' => 'dummy_authorization_handler', 'metadata' => { 'postal_code' => postal_code, 'document_number' => document_number, 'scope_id' => nil }, 'unique_id' => document_number }] }
       expect(actual_extended_data).to eq(expected)
     end
 

@@ -19,18 +19,10 @@ module Decidim
         )
       end
 
-      def workflow_manifests(component)
-        ApplicationHelper.workflow_manifests(component)
-      end
-
       # Checks whether all workflow manifests for the givevn +component+ are of type "direct".
       def self.all_verifications_of_type_direct?(component)
         manifests = workflow_manifests(component)
         manifests.any? && manifests.all? { |manifest| manifest.type == 'direct' }
-      end
-
-      def all_verifications_of_type_direct?(component)
-        ApplicationHelper.all_verifications_of_type_direct?(component)
       end
     end
   end

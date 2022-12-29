@@ -9,8 +9,19 @@ end
 
 shared_examples 'has a budget ready to vote' do
   # votes enabled by default in budgets
-  let(:budgets_component) { create(:budget_component) }
-  let(:component) { budgets_component }
+  let(:manifest_name) { "proposals" }
+  include_context "with a component"
+
+  let(:component) do
+    create(:proposal_component,
+           manifest: manifest,
+           participatory_space: participatory_process)
+  end
+  let(:proposal) { create(:proposal, component: component) }
+  let(:budgets_component) do
+    create(:component, manifest_name: :budgets, participatory_space: proposal.component.participatory_space)
+  end
+
   let!(:project) { create(:project, component: budgets_component) }
   let(:resource) { project }
 end

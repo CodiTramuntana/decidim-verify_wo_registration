@@ -8,7 +8,6 @@ module Helpers
   # - it waits for the loginModal to appear
   def go_support_resource_card(resource)
     page.visit main_component_path(component)
-    expect(page).to have_content(resource.title.kind_of?(Hash) ? translated(resource.title) : resource.title)
 
     within '.card__support', match: :first do
       click_button 'Support'
@@ -23,9 +22,8 @@ module Helpers
   # - it waits for the loginModal to appear
   def go_support_resource_link(resource)
     page.visit main_component_path(component)
-    expect(page).to have_content(resource.title.kind_of?(Hash) ? translated(resource.title) : resource.title)
 
-    page.find('a[data-toggle=loginModal]').click
+    page.find('[data-open=loginModal]').click
 
     expect(page).to have_css('#loginModal', visible: true)
   end

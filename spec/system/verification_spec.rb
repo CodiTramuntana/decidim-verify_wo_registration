@@ -20,8 +20,6 @@ describe 'Verification process', type: :system do
       end
 
       it 'redirects to the previous page and renders a notice' do
-        resource_title= resource.title.kind_of?(Hash) ? translated(resource.title) : resource.title
-        expect(page).to have_content(resource_title)
         expect(page).to have_content('You have been successfully verified. You have 30min to participate.')
       end
     end
