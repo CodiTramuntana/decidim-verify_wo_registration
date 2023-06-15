@@ -1,6 +1,10 @@
 # Changelog
 Current version is defined at `lib/decidim/verify_wo_registration/version.rb`
 
+## Version 0.0.4
+
+- Refactor lib/decidim/verify_wo_registration/version.rb
+
 ## Version 0.0.3
 
 - Make module compatible with Decidim 0.26
