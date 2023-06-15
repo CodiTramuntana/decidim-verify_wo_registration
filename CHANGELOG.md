@@ -3,7 +3,7 @@ Current version is defined at `lib/decidim/verify_wo_registration/version.rb`
 
 ## Version 0.0.4
 
-- Refactors in lib/decidim/verify_wo_registration/version.rb
+- Refactor lib/decidim/verify_wo_registration/version.rb
 
 ## Version 0.0.3
 
