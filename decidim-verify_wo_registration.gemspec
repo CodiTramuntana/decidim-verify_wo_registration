@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.email = ['oliver.vh@coditramuntana.com']
   s.license = 'MIT'
   s.homepage = 'https://github.com/CodiTramuntana/decidim-verify_wo_registration'
-  s.required_ruby_version = '>= 2.5'
+  s.required_ruby_version = '>= 3.0.2'
 
   s.name = 'decidim-verify_wo_registration'
   s.summary = 'Adds the hability for proposals and budgets components to allow users to give support without being registered.'
@@ -19,10 +19,10 @@ Gem::Specification.new do |s|
   s.files = Dir['{app,config,lib}/**/*', 'LICENSE-MIT.txt', 'Rakefile', 'README.md']
 
   
-  s.add_dependency 'decidim-budgets', Decidim::VerifyWoRegistration.version
-  s.add_dependency 'decidim-core', Decidim::VerifyWoRegistration.version
-  s.add_dependency 'decidim-proposals', Decidim::VerifyWoRegistration.version
-  s.add_development_dependency 'decidim', Decidim::VerifyWoRegistration.version
-  s.add_development_dependency 'decidim-dev', Decidim::VerifyWoRegistration.version
-  s.add_development_dependency 'decidim-participatory_processes', Decidim::VerifyWoRegistration.version
+  s.add_dependency 'decidim-budgets', Decidim::VerifyWoRegistration.decidim_version
+  s.add_dependency 'decidim-core', Decidim::VerifyWoRegistration.decidim_version
+  s.add_dependency 'decidim-proposals', Decidim::VerifyWoRegistration.decidim_version
+  s.add_development_dependency 'decidim', Decidim::VerifyWoRegistration.decidim_version
+  s.add_development_dependency 'decidim-dev', Decidim::VerifyWoRegistration.decidim_version
+  s.add_development_dependency 'decidim-participatory_processes', Decidim::VerifyWoRegistration.decidim_version
 end
