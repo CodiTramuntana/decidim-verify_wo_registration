@@ -18,11 +18,11 @@ Gem::Specification.new do |s|
 
   s.files = Dir['{app,config,lib}/**/*', 'LICENSE-MIT.txt', 'Rakefile', 'README.md']
 
-  DECIDIM_VER = '>= 0.26'
-  s.add_dependency 'decidim-budgets', DECIDIM_VER
-  s.add_dependency 'decidim-core', DECIDIM_VER
-  s.add_dependency 'decidim-proposals', DECIDIM_VER
-  s.add_development_dependency 'decidim', DECIDIM_VER
-  s.add_development_dependency 'decidim-dev', DECIDIM_VER
-  s.add_development_dependency 'decidim-participatory_processes', DECIDIM_VER
+  
+  s.add_dependency 'decidim-budgets', Decidim::VerifyWoRegistration.decidim_version
+  s.add_dependency 'decidim-core', Decidim::VerifyWoRegistration.decidim_version
+  s.add_dependency 'decidim-proposals', Decidim::VerifyWoRegistration.decidim_version
+  s.add_development_dependency 'decidim', Decidim::VerifyWoRegistration.decidim_version
+  s.add_development_dependency 'decidim-dev', Decidim::VerifyWoRegistration.decidim_version
+  s.add_development_dependency 'decidim-participatory_processes', Decidim::VerifyWoRegistration.decidim_version
 end
