@@ -1,5 +1,9 @@
 # Changelog
-Current version is defined at `lib/decidim/verify_wo_registration/version.rb`
+
+## Version 0.1.0
+
+- Upgrade min Decidim version to v0.27.
+- The rectify gem has been removed from the Decidim v0.27 stack. Thus, also removed from this module.
 
 ## Version 0.0.4
 

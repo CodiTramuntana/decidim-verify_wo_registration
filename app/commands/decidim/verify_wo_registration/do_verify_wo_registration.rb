@@ -3,7 +3,7 @@
 module Decidim
   module VerifyWoRegistration
     # A command with all the business logic to verify and impersonate (managed user).
-    class DoVerifyWoRegistration < Rectify::Command
+    class DoVerifyWoRegistration < Decidim::Command
       # Public: Initializes the command.
       #
       # form         - The form with the authorization info

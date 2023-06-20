@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.email = ['oliver.vh@coditramuntana.com']
   s.license = 'MIT'
   s.homepage = 'https://github.com/CodiTramuntana/decidim-verify_wo_registration'
-  s.required_ruby_version = '>= 2.5'
+  s.required_ruby_version = '>= 3.0.2'
 
   s.name = 'decidim-verify_wo_registration'
   s.summary = 'Adds the hability for proposals and budgets components to allow users to give support without being registered.'
