@@ -94,9 +94,10 @@ module Decidim
       end
 
       def create_or_update_authorization
-        handler= @form.verified_handler
-        handler.user = user
-        Authorization.create_or_update_from(handler)
+        @form.authorization_handlers.each do |handler|
+          handler.user = user
+          Authorization.create_or_update_from(handler)
+        end
       end
 
       def user_authorizations
