@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 0.2.0
+
+- Support multiple verifiers (handlers) at once.
+
 ## Version 0.1.0
 
 - Upgrade min Decidim version to v0.27.
