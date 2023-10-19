@@ -1,10 +1,8 @@
-<div class="columns medium-centered">
-  <div class="text-center">
-    <%= link_to(t("verify_wo_registration.login_modal.col1_only_verify_btn"),
-                Decidim::VerifyWoRegistration::Engine.routes.url_helpers.new_verification_path({
-                  component_id: current_component.id,
-                  redirect_url: URI(request.original_fullpath).path,
-                  votable_gid: "gid"
-                }), class: "button expanded") %>
-  </div>
+<div class="form__wrapper">
+  <%= link_to(t("verify_wo_registration.login_modal.col1_only_verify_btn"),
+              Decidim::VerifyWoRegistration::Engine.routes.url_helpers.new_verification_path({
+                component_id: current_component.id,
+                redirect_url: URI(request.original_fullpath).path,
+                votable_gid: "gid"
+              }), class: "button button__lg button__secondary") %>
 </div>
