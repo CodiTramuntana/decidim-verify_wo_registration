@@ -7,7 +7,7 @@ module Helpers
   # - and clicks on the first "Support" button it finds
   # - it waits for the loginModal to appear
   def go_support_resource_card(resource)
-    page.visit main_component_path(component)
+    page.visit main_component_path(resource.component)
     click_link translated(resource.title)
 
     within 'aside.layout-item__aside' do
@@ -22,7 +22,7 @@ module Helpers
   # - and clicks on the first "Support" button it finds
   # - it waits for the loginModal to appear
   def go_support_resource_link(resource)
-    page.visit main_component_path(component)
+    page.visit main_component_path(resource.component)
 
     page.find('[data-open=loginModal]').click
 
