@@ -16,7 +16,7 @@ describe 'Verification process', type: :system do
     context 'when correctly filling the form' do
       before do
         click_verify_only
-        fill_the_verification_form_for_dummy_authorization_handler(document_number: '00000000X', postal_code: '00000', birthday: '2000/01/01')
+        fill_the_verification_form_for_dummy_authorization_handler(document_number: '00000000X', postal_code: '00000', birthday: Date.new(2000, 1, 1))
       end
 
       it 'redirects to the previous page and renders a notice' do
@@ -27,7 +27,7 @@ describe 'Verification process', type: :system do
     context 'when filling the form with incorrect data' do
       before do
         click_verify_only
-        fill_the_verification_form_for_dummy_authorization_handler(document_number: '12345678A', postal_code: '12345', birthday: '2021/01/27')
+        fill_the_verification_form_for_dummy_authorization_handler(document_number: '12345678A', postal_code: '12345', birthday: Date.new(2021, 1, 27))
       end
 
       it 'redirects back to the form and renders the error' do
