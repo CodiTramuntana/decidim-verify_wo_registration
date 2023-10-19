@@ -23,8 +23,9 @@ module Helpers
   # - it waits for the loginModal to appear
   def go_support_resource_link(resource)
     page.visit main_component_path(resource.component)
+    click_link translated(resource.title)
 
-    page.find('[data-open=loginModal]').click
+    page.find('[data-dialog-open=loginModal]', match: :first).click
 
     expect(page).to have_css('#loginModal', visible: true)
   end
