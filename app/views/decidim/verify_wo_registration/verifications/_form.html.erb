@@ -1,13 +1,10 @@
 <% form.object.authorization_handlers.each_with_index do |handler, handler_idx| %>
-  <div class="form__wrapper-block">
-    <h2 class="h3">
-      <%= t("authorize_with", authorizer: t("#{handler.handler_name}.name", scope: "decidim.authorization_handlers"), scope: "decidim.verifications.authorizations.new") %>
-    </h2>
-
-    <%= form.fields_for "authorizations[#{handler_idx}]", handler, builder: Decidim::AuthorizationFormBuilder do |handler_form| %>
-      <div id="authorization-handler-<%= handler_form.object.handler_name %>" class="authorization-handler">
-        <%= render "handler_form", handler_form: handler_form %>
-      </div>
-    <% end %>
-  </div>
+  <h2 class="h3">
+    <%= t("authorize_with", authorizer: t("#{handler.handler_name}.name", scope: "decidim.authorization_handlers"), scope: "decidim.verifications.authorizations.new") %>
+  </h2>
+  <%= form.fields_for "authorizations[#{handler_idx}]", handler, builder: Decidim::AuthorizationFormBuilder do |handler_form| %>
+    <div id="authorization-handler-<%= handler_form.object.handler_name %>" class="authorization-handler form__wrapper">
+      <%= render "handler_form", handler_form: handler_form %>
+    </div>
+  <% end %>
 <% end %>
