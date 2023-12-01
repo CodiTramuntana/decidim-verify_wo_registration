@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 
 ruby RUBY_VERSION
 
-DECIDIM_VERSION = { git: 'https://github.com/decidim/decidim', branch: "develop" }.freeze
+DECIDIM_VERSION = { git: 'https://github.com/decidim/decidim', tag: 'v0.28.0.rc1' }.freeze
 gem 'decidim-budgets', DECIDIM_VERSION
 gem 'decidim-core', DECIDIM_VERSION
 gem 'decidim-proposals', DECIDIM_VERSION
