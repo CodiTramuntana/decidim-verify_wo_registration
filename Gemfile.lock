@@ -178,9 +178,9 @@ PATH
   remote: .
   specs:
     decidim-verify_wo_registration (0.3.0)
-      decidim-budgets (>= 0.27)
-      decidim-core (>= 0.27)
-      decidim-proposals (>= 0.27)
+      decidim-budgets (>= 0.28)
+      decidim-core (>= 0.28)
+      decidim-proposals (>= 0.28)
 
 GEM
   remote: https://rubygems.org/
