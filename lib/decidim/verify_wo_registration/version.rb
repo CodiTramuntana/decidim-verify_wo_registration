@@ -3,8 +3,8 @@
 module Decidim
   # This holds the decidim-meetings version.
   module VerifyWoRegistration
-    VERSION = '0.2.0'
-    DECIDIM_VER = '>= 0.27'
+    VERSION = '0.3.0'
+    DECIDIM_VER = '>= 0.28'
 
     def self.version
       VERSION

@@ -1,5 +1,10 @@
 # Changelog
 
+## Version 0.3.0
+
+- Upgrade to Decidim v0.28
+- Adapt login and forms to new redesign
+
 ## Version 0.2.0
 
 - Support multiple verifiers (handlers) at once.
