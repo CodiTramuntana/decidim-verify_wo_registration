@@ -7,9 +7,10 @@ module Helpers
   # - and clicks on the first "Support" button it finds
   # - it waits for the loginModal to appear
   def go_support_resource_card(resource)
-    page.visit main_component_path(component)
+    page.visit main_component_path(resource.component)
+    click_link translated(resource.title)
 
-    within '.card__support', match: :first do
+    within 'aside.layout-item__aside' do
       click_button 'Support'
     end
     expect(page).to have_css('#loginModal', visible: true)
@@ -21,16 +22,17 @@ module Helpers
   # - and clicks on the first "Support" button it finds
   # - it waits for the loginModal to appear
   def go_support_resource_link(resource)
-    page.visit main_component_path(component)
+    page.visit main_component_path(resource.component)
+    click_link translated(resource.title)
 
-    page.find('[data-open=loginModal]').click
+    page.find('[data-dialog-open=loginModal]', match: :first).click
 
     expect(page).to have_css('#loginModal', visible: true)
   end
 
   # In the loginModal, click the button to start verifying.
   def click_verify_only
-    within '#loginModal .row', match: :first do
+    within '#loginModal [data-dialog-container] .form__wrapper', match: :first do
       click_link 'Verify without signup'
     end
     expect(page).to have_content('Participant verification')

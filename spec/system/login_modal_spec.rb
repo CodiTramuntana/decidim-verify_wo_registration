@@ -4,7 +4,7 @@ require 'spec_helper'
 
 shared_examples 'standard login modal' do
   it 'is the standard one' do
-    expected_text = 'Please sign in'
+    expected_text = 'Please log in'
     expect(page).to have_content(expected_text)
   end
 end

@@ -7,6 +7,8 @@ module Decidim
       include ::Decidim::VerifyWoRegistration::ApplicationHelper
       include FormFactory
 
+      layout "layouts/decidim/authorizations"
+
       before_action :validate_verification_workflow_manifests!
 
       helper Decidim::AuthorizationFormHelper
